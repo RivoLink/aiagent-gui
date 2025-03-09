@@ -1,0 +1,56 @@
+{
+    "name": "electron-template",
+    "private": true,
+    "version": "1.0.0",
+    "main": "electron.js",
+    "type": "module",
+    "scripts": {
+        "dev": "concurrently \"npm:dev:vite\" \"npm:dev:electron\"",
+        "dev:vite": "vite",
+        "dev:electron": "cross-env NODE_ENV=development electron .",
+        "prod": "npm-run-all -s prod:vite prod:electron",
+        "prod:vite": "vite build",
+        "prod:electron": "electron .",
+        "build": "npm-run-all -s build:vite build:electron",
+        "build:vite": "vite build",
+        "build:electron": "npm run build:electron:linux",
+        "build:electron:linux": "electron-builder --linux",
+        "lint": "eslint .",
+        "lint:fix": "eslint --fix ."
+    },
+    "build": {
+        "publish": false,
+        "appId": "mg.rivolink.electron.template",
+        "files": [
+            "dist/**/*",
+            "electron.js"
+        ],
+        "directories": {
+            "buildResources": "assets"
+        },
+        "linux": {
+            "target": "AppImage",
+            "category": "Utility"
+        }
+    },
+    "dependencies": {
+        "react": "^19.0.0",
+        "react-dom": "^19.0.0"
+    },
+    "devDependencies": {
+        "@eslint/js": "^9.21.0",
+        "@types/react": "^19.0.10",
+        "@types/react-dom": "^19.0.4",
+        "@vitejs/plugin-react": "^4.3.4",
+        "concurrently": "^9.1.2",
+        "cross-env": "^7.0.3",
+        "electron": "^35.0.0",
+        "electron-builder": "^25.1.8",
+        "eslint": "^9.21.0",
+        "eslint-plugin-react-hooks": "^5.1.0",
+        "eslint-plugin-react-refresh": "^0.4.19",
+        "globals": "^15.15.0",
+        "npm-run-all": "^4.1.5",
+        "vite": "^6.2.0"
+    }
+}

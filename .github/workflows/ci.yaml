@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - fix/*
+      - chore/*
+      - feature/*
+      - release-*
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout ${{github.event.ref}}
+        uses: actions/checkout@v4
+        with:
+          token: ${{secrets.GITHUB_TOKEN}}
+
+      - name: Setup NodeJs
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22.14.0"
+
+      - name: NPM Install
+        run: |
+          npm install
+
+      - name: Check Eslint
+        run: |
+          npm run lint

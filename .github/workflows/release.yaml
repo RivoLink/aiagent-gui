@@ -1,0 +1,85 @@
+name: Release
+
+on:
+  workflow_run:
+    workflows:
+      - CI
+    types:
+      - completed
+    branches:
+      - release-major
+      - release-minor
+      - release-patch
+
+jobs:
+  release:
+    if: github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout ${{github.event.ref}}
+        uses: actions/checkout@v4
+        with:
+          token: ${{secrets.GITHUB_TOKEN}}
+
+      - name: Setup Git Config
+        run: |
+          git config user.email "rivo.link@gmail.com"
+          git config user.name "RivoLink"
+
+      - name: Setup NodeJs
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22.14.0"
+
+      - name: NPM Install
+        run: |
+          npm install
+
+      - name: Compute Version
+        run: |
+          branch=$(jq -r '.workflow_run.head_branch' "$GITHUB_EVENT_PATH")
+          echo "BRANCH=$branch" >> "$GITHUB_ENV"
+          echo "RELEASE=${branch#release-}" >> "$GITHUB_ENV"
+
+      - name: Update Version
+        run: |
+          npm version ${{env.RELEASE}} --no-git-tag-version
+
+      - name: Load Version
+        run: |
+          version=$(npm pkg get version | sed -e 's/"//g')
+          echo "VERSION=$version" >> "$GITHUB_ENV"
+
+      - name: Build Project
+        run: |
+          npm run build
+
+      # Exceeds GitHub's file size limit of 100.00 MB
+      # - name: Setup Binary
+      #   run: |
+      #     rm -rf bin && mkdir bin
+      #     cp "dist/electron-template-${{env.VERSION}}.AppImage" "bin/electron-template.AppImage"
+
+      - name: Setup Artifact
+        run: |
+          echo "ARTIFACT=dist/electron-template-${{env.VERSION}}.AppImage" >> "$GITHUB_ENV"
+
+      - name: Commit Changes
+        run: |
+          git add .
+          git commit -m "${{env.VERSION}}"
+
+      - name: Push Changes
+        run: |
+          git push origin main
+
+      - name: Remove Branch
+        run: |
+          git push origin --delete "${{env.BRANCH}}"
+
+      - name: Create Release
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        run: |
+          gh release create "${{env.VERSION}}" "${{env.ARTIFACT}}" --generate-notes

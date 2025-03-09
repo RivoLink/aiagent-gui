@@ -1,0 +1,6 @@
+- name: Deploy
+  hosts: localhost
+
+  tasks:
+    - name: Deploy
+      command: 'localhost/deploy.sh'
