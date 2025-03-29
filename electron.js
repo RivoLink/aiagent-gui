@@ -10,8 +10,8 @@ let splash, mainWindow;
 function createWindow() {
     // Create the splash screen window
     splash = new BrowserWindow({
-        width: 400,
-        height: 300,
+        width: 270,
+        height: 360,
         transparent: true,
         frame: false,
         alwaysOnTop: true,
@@ -33,8 +33,8 @@ function createWindow() {
 
     // Create the main window (hidden until ready)
     mainWindow = new BrowserWindow({
-        width: 800,
-        height: 600,
+        width: 540,
+        height: 720,
         show: false,
         webPreferences: {
             nodeIntegration: true,
@@ -48,6 +48,9 @@ function createWindow() {
     } else {
         mainWindow.loadFile(path.join(__dirname, 'dist', 'index.html'));
     }
+
+    // Remove the menu bar
+    mainWindow.setMenu(null);
 
     // When the main window is ready, destroy the splash and show the main window
     mainWindow.once('ready-to-show', () => {
