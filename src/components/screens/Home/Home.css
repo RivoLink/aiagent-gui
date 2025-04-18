@@ -115,8 +115,16 @@
     margin-bottom: 20px;
 }
 
-.chat-messages .message-group:last-child {
-    margin-bottom: 10px;
+.chat-messages .message-group.last-aia {
+    margin-bottom: 0px;
+}
+
+.chat-messages .message-group.last-aia .avatar {
+    opacity: 0;
+}
+
+.chat-messages .message-group.last-aia ~ .message-group .typing-indicator {
+    border-top-left-radius: 5px;
 }
 
 .chat-messages .message-container {
@@ -183,10 +191,13 @@
 
 .chat-messages .typing-indicator {
     display: flex;
+    align-items: center;
     width: fit-content;
-    padding: 10px 15px;
+    height: 25px;
     background: white;
+    padding: 10px 15px 7px;
     border-radius: 20px;
+    border-bottom-left-radius: 5px;
 }
 
 .chat-messages .typing-indicator span {
