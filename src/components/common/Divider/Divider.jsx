@@ -3,7 +3,7 @@ import { formatWM } from '../../../assets/utils/time';
 
 import './Divider.css';
 
-function Divider({group, message}) {
+function Divider({message}) {
     return (
         <>
             <div className="date-divider">

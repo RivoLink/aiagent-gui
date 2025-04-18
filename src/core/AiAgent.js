@@ -1,11 +1,11 @@
-import fleet from "fleet.js";
+import fleet from 'fleet.js';
 
 export default class AiAgent {
 
     static URL = import.meta.env.VITE_AIAGENT_URL;
     static TOKEN = import.meta.env.VITE_AIAGENT_TOKEN;
     
-    static send({action, message, history}, callback) {
+    static send({action, message}, callback) {
         const url = AiAgent.#getUrl(action);
         const token = AiAgent.#getToken();
 

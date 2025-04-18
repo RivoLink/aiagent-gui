@@ -101,7 +101,7 @@ function Home() {
         setMessage(e.target.value);
     }
 
-    const onSend = (e) => {
+    const onSend = () => {
         sendMessage();
     }
 
@@ -142,7 +142,7 @@ function Home() {
         return () => {
             fleet.removeEvent(document, 'click', handleClick)
         };
-    }, []);
+    });
 
     const getMessageGroups = () => {
         let groups = [];
@@ -211,7 +211,7 @@ function Home() {
             <div className="chat-messages">
                 {getMessageGroups().map((group, grpKey) => {
                     if (group.isDivider) return (
-                        <Divider key={grpKey} group={group} message={group.message}/>
+                        <Divider key={grpKey} message={group.message}/>
                     )
 
                     const lastAiA = loading && group.last && group.fromAiA;
