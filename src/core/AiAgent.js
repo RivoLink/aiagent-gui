@@ -6,12 +6,14 @@ export default class AiAgent {
     static TOKEN = import.meta.env.VITE_AIAGENT_TOKEN;
     
     static send({action, message}, callback) {
+        action = action || 'chatting';
+
         const url = AiAgent.#getUrl(action);
         const token = AiAgent.#getToken();
 
         const data = {
             'text': message,
-            'action': action || 'chatting',
+            'action': action,
         }
 
         const onResponse = (json) => {
@@ -32,9 +34,9 @@ export default class AiAgent {
     static #getUrl(action) {
         switch(action) {
             default:
-            case 'translate': return AiAgent.URL + '/lexifix';
-            case 'spelling' : return AiAgent.URL + '/lexifix';
             case 'chatting' : return AiAgent.URL + '/chat';
+            case 'spelling' : return AiAgent.URL + '/lexifix';
+            case 'translate': return AiAgent.URL + '/lexifix';
         }
     }
 }
