@@ -7,6 +7,7 @@ import classNames from 'classnames';
 
 import Message from '../../common/Message/Message';
 import Divider from '../../common/Divider/Divider';
+import Notification from '../../common/Notification/Notification';
 
 import {
     areSameDay,
@@ -206,6 +207,10 @@ function Home() {
                         <path d="M13 19C13 18.4477 12.5523 18 12 18C11.4477 18 11 18.4477 11 19C11 19.5523 11.4477 20 12 20C12.5523 20 13 19.5523 13 19Z" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
                     </svg>
                 </div>
+            </div>
+
+            <div className="notification-container">
+                <Notification />
             </div>
 
             <div className="chat-messages">
