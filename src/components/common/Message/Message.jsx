@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { formatHM } from '../../../assets/utils/time';
 import { resetSelection } from '../../../utils/functions/resetSelection';
 
@@ -12,6 +12,8 @@ import useClickAndDoubleClick from '../../../utils/hooks/useClickAndDoubleClick'
 import './Message.css';
 
 function Message({ group, message }) {
+    const messageRef = useRef(null);
+
     const [_, copy] = useCopyToClipboard();
     const [showOptions, setShowOptions] = useState(false);
 
@@ -34,12 +36,12 @@ function Message({ group, message }) {
     const selected = useOnSelection((text) => {
         copy(text);
         Notification.show('Copied to clipboard.');
-    });
+    }, messageRef);
 
     return (
         <>
             {group.fromAiA ? (
-                <div className="message-container">
+                <div className="message-container" ref={messageRef}>
                     <div className="avatar"></div>
                     <div className="message received" 
                         onClick={handlers.onClick}
@@ -55,7 +57,7 @@ function Message({ group, message }) {
                     </div>
                 </div>
             ) : (
-                <div className="message-container sent">
+                <div className="message-container sent" ref={messageRef}>
                     <div className="message sent"
                         onClick={handlers.onClick}
                         onDoubleClick={handlers.onDoubleClick}

@@ -1,41 +1,52 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useRef, useState, useEffect, useCallback } from 'react';
 
 /**
- * Hook to listen for text selection end, invoke a callback, and track invocation state.
- * @param {Function} callback - Function invoked with the selected text.
- * @param {Object} options - Configuration options.
- * @param {boolean} options.enableTouch - Listen on touchend (default true).
- * @param {boolean} options.enableMouse - Listen on mouseup (default true).
- * @returns {boolean} - `true` if the callback has been invoked at least once.
+ * Hook to listen for new text selections within a specified target element and invoke a callback only when selection changes.
+ * Automatically resets internal state if selection occurs outside the target.
+ *
+ * @param {Function} callback - Function to be called with the newly selected text.
+ * @param {React.RefObject<HTMLElement>} targetRef - Ref pointing to the container element to scope selection.
+ * @returns {boolean} - `true` once a selection inside the target has been processed.
  */
-export default function useOnSelection(callback, {enableTouch = true, enableMouse = true} = {}) {
+export default function useOnSelection(callback, targetRef) {
+    const lastSelectionRef = useRef('');
     const [hasFired, setHasFired] = useState(false);
 
     const handleSelectionEnd = useCallback(() => {
-        const text = window.getSelection().toString();
-        if (text?.trim()) {
-            callback(text);
-            setHasFired(true);
+        const selection = window.getSelection();
+        if (!selection) return;
+
+        const text = selection.toString().trim();
+        const target = targetRef.current;
+        if (!target) return;
+
+        const { anchorNode, focusNode } = selection;
+        const isInside = target.contains(anchorNode) || target.contains(focusNode);
+
+        if (text && (text !== lastSelectionRef.current)) {
+            if (isInside) {
+                lastSelectionRef.current = text;
+                callback(text);
+                setHasFired(true);
+            }
+        } else {
+            lastSelectionRef.current = '';
+            setHasFired(false);
         }
-    }, [callback]);
+    }, [callback, targetRef]);
 
     useEffect(() => {
-        if (enableMouse) {
-            document.addEventListener('mouseup', handleSelectionEnd);
-        }
-        if (enableTouch) {
-            document.addEventListener('touchend', handleSelectionEnd);
-        }
+        const target = targetRef.current;
+        if (!target) return;
+
+        target.addEventListener('mouseup', handleSelectionEnd);
+        target.addEventListener('touchend', handleSelectionEnd);
 
         return () => {
-            if (enableMouse) {
-                document.removeEventListener('mouseup', handleSelectionEnd);
-            }
-            if (enableTouch) {
-                document.removeEventListener('touchend', handleSelectionEnd);
-            }
+            target.removeEventListener('mouseup', handleSelectionEnd);
+            target.removeEventListener('touchend', handleSelectionEnd);
         };
-    }, [handleSelectionEnd, enableMouse, enableTouch]);
+    }, [handleSelectionEnd, targetRef]);
 
-  return hasFired;
+    return hasFired;
 }
