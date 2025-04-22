@@ -1,5 +1,5 @@
 import React from 'react';
-import { formatWM } from '../../../assets/utils/time';
+import { formatWM } from '@app/assets/utils/time';
 
 import './Divider.css';
 

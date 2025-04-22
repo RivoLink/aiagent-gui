@@ -1,4 +1,4 @@
-import { formatHM, formatWM } from "../assets/utils/time";
+import { formatHM, formatWM } from "@app/assets/utils/time";
 
 export default class Runnable {
 

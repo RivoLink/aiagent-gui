@@ -1,13 +1,13 @@
 import React, { useState, useRef } from 'react';
-import { formatHM } from '../../../assets/utils/time';
-import { resetSelection } from '../../../utils/functions/resetSelection';
+import { formatHM } from '@app/assets/utils/time';
+import { resetSelection } from '@app/utils/functions/resetSelection';
 
 import Markdown from "react-markdown";
-import Notification from '../../../utils/classes/Notification';
+import Notification from '@app/utils/classes/Notification';
 
-import useOnSelection from '../../../utils/hooks/useOnSelection';
-import useCopyToClipboard from '../../../utils/hooks/useCopyToClipboard';
-import useClickAndDoubleClick from '../../../utils/hooks/useClickAndDoubleClick';
+import useOnSelection from '@app/utils/hooks/useOnSelection';
+import useCopyToClipboard from '@app/utils/hooks/useCopyToClipboard';
+import useClickAndDoubleClick from '@app/utils/hooks/useClickAndDoubleClick';
 
 import './Message.css';
 

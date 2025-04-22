@@ -1,20 +1,20 @@
 import React, { useEffect, useState, useRef } from 'react';
 
-import AiAgent from '../../../core/AiAgent';
-import Command from '../../../core/Command';
+import AiAgent from '@app/core/AiAgent';
+import Command from '@app/core/Command';
 
 import fleet from 'fleet.js';
 import classNames from 'classnames';
 
-import Message from '../../common/Message/Message';
-import Divider from '../../common/Divider/Divider';
-import Notification from '../../common/Notification/Notification';
+import Message from '@app/components/common/Message/Message';
+import Divider from '@app/components/common/Divider/Divider';
+import Notification from '@app/components/common/Notification/Notification';
 
 import {
     areSameDay,
     minutesIntervall,
     nowISOString,
-} from '../../../assets/utils/time';
+} from '@app/assets/utils/time';
 
 import './Home.css';
 
