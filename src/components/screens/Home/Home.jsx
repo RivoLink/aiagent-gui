@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 
 import AiAgent from '../../../core/AiAgent';
+import Command from '../../../core/Command';
 
 import fleet from 'fleet.js';
 import classNames from 'classnames';
@@ -32,14 +33,22 @@ function Home() {
     const [loading, setLoading] = useState(false);
     const [requests, setRequests] = useState(0);
 
+    Command.addRunnable('clear', () => {
+        fleet.$save('backup', fleet.$load('messages'));
+        setMessages([]);
+    });
+
+    Command.addRunnable('restore', () => {
+        const backup = fleet.$load('backup', []);
+        setMessages(backup);
+    })
+
     const sendMessage = () => {
         if (!message || !message.trim()) {
             return;
         }
 
-        const history = [...messages];
         const newMessages = [...messages];
-
         const last = messages.pop();
 
         if (!last || !areSameDay(last.date)) {
@@ -58,19 +67,39 @@ function Home() {
         setMessage('');
         setMessages(newMessages);
 
-        setLoading(true);
-        setRequests(prev => prev + 1);
+        const command = Command.parse(
+            action,
+            message,
+        );
 
-        AiAgent.send({action, message, history}, (response) => {
-            const data = {
-                text: response,
-                date: nowISOString(),
-                fromAiA: true
-            }
+        if (command.isRunnable) {
+            Command.run(command, (output) => {
+                if (!output) return;
 
-            setRequests(prev => prev - 1);
-            setMessages(prev => [...prev, data]);
-        })
+                const data = {
+                    text: output,
+                    date: nowISOString(),
+                    fromAiA: true
+                }
+
+                setMessages(prev => [...prev, data]);
+            });
+        }
+        else {
+            setLoading(true);
+            setRequests(prev => prev + 1);
+
+            AiAgent.send(command, (response) => {
+                const data = {
+                    text: response,
+                    date: nowISOString(),
+                    fromAiA: true
+                }
+
+                setRequests(prev => prev - 1);
+                setMessages(prev => [...prev, data]);
+            })
+        }
     }
 
     const toggleFabButtons = function(show){
