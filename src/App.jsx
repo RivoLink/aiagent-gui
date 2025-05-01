@@ -1,12 +1,13 @@
-import Home from './components/screens/Home/Home';
+import AiAgent from '@app/core/AiAgent';
+import Home from '@app/components/screens/Home/Home';
 
 import './App.css';
 
 function App() {
+    AiAgent.Session.load();
+
     return (
-        <>
-            <Home />
-        </>
+        <Home />
     )
 }
 

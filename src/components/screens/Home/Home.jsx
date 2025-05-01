@@ -34,11 +34,16 @@ function Home() {
     const [requests, setRequests] = useState(0);
 
     Command.addRunnable('clear', () => {
+        AiAgent.Session.backup();
+        AiAgent.Session.refresh();
+
         fleet.$save('backup', fleet.$load('messages'));
         setMessages([]);
     });
 
     Command.addRunnable('restore', () => {
+        AiAgent.Session.restore();
+
         const backup = fleet.$load('backup', []);
         setMessages(backup);
     })

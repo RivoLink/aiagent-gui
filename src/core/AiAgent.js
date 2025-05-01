@@ -1,10 +1,13 @@
 import fleet from 'fleet.js';
+import { v4 as uuidv4 } from 'uuid';
 
 export default class AiAgent {
 
+    static #SESSION = uuidv4();
+
     static URL = import.meta.env.VITE_AIAGENT_URL;
     static TOKEN = import.meta.env.VITE_AIAGENT_TOKEN;
-    
+
     static send({action, message}, callback) {
         action = action || 'chatting';
 
@@ -14,6 +17,7 @@ export default class AiAgent {
         const data = {
             'text': message,
             'action': action,
+            'session': AiAgent.#SESSION,
         }
 
         const onResponse = (json) => {
@@ -39,4 +43,33 @@ export default class AiAgent {
             case 'translate': return AiAgent.URL + '/lexifix';
         }
     }
+
+    static Session = class {
+
+        static #BACKUP_KEY  = 'backup_session';
+        static #CURRENT_KEY = 'current_session';
+
+        static refresh() {
+            AiAgent.#SESSION = uuidv4();
+            AiAgent.Session.save();
+        }
+
+        static save() {
+            fleet.$save(AiAgent.Session.#CURRENT_KEY, AiAgent.#SESSION);
+        }
+
+        static load() {
+            AiAgent.#SESSION = fleet.$load(AiAgent.Session.#CURRENT_KEY, uuidv4());
+            AiAgent.Session.save();
+        }
+
+        static backup() {
+            fleet.$save(AiAgent.Session.#BACKUP_KEY, AiAgent.#SESSION);
+        }
+
+        static restore() {
+            AiAgent.#SESSION = fleet.$load(AiAgent.Session.#BACKUP_KEY, uuidv4());
+            AiAgent.Session.save();
+        }
+    };
 }
