@@ -9,7 +9,7 @@ export default class AiAgent {
     static TOKEN = import.meta.env.VITE_AIAGENT_TOKEN;
 
     static send({action, message}, callback) {
-        action = action || 'chatting';
+        action = action || 'generic';
 
         const url = AiAgent.#getUrl(action);
         const token = AiAgent.#getToken();
@@ -38,6 +38,7 @@ export default class AiAgent {
     static #getUrl(action) {
         switch(action) {
             default:
+            case 'generic'  : return AiAgent.URL + '/generic';
             case 'chatting' : return AiAgent.URL + '/chat';
             case 'spelling' : return AiAgent.URL + '/lexifix';
             case 'translate': return AiAgent.URL + '/lexifix';
