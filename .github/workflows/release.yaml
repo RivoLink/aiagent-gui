@@ -59,11 +59,11 @@ jobs:
       # - name: Setup Binary
       #   run: |
       #     rm -rf bin && mkdir bin
-      #     cp "dist/electron-template-${{env.VERSION}}.AppImage" "bin/electron-template.AppImage"
+      #     cp "dist/aiagent-${{env.VERSION}}.AppImage" "bin/aiagent.AppImage"
 
       - name: Setup Artifact
         run: |
-          echo "ARTIFACT=dist/electron-template-${{env.VERSION}}.AppImage" >> "$GITHUB_ENV"
+          echo "ARTIFACT=dist/aiagent-${{env.VERSION}}.AppImage" >> "$GITHUB_ENV"
 
       - name: Commit Changes
         run: |

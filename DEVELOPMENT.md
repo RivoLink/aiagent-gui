@@ -11,11 +11,11 @@ This document outlines all the necessary steps to create, develop, and build you
 Open your terminal and run:
 
 ```bash
-# Create a new Vite project named "electron-template"
-npm create vite@latest electron-template --template react
+# Create a new Vite project named "aiagent"
+npm create vite@latest aiagent --template react
 
 # Navigate into the project directory
-cd electron-template
+cd aiagent
 
 # Install project dependencies
 npm install
@@ -64,7 +64,7 @@ function createWindow() {
         <html lang="en">
             <head>
                 <meta charset="UTF-8">
-                <title>Electron Template</title>
+                <title>AiAgent</title>
             </head>
             <body>
             </body>
@@ -120,7 +120,7 @@ Ensure your `package.json` has the `"main"` field pointing to `electron.js`:
 
 ```json
 {
-    "name": "electron-template",
+    "name": "aiagent",
     "private": true,
     "version": "0.0.0",
     // ... other fields
@@ -202,7 +202,7 @@ This project is configured for Linux-only packaging. Update your electron-builde
 ```json
 "build": {
     "publish": false,
-    "appId": "mg.rivolink.electron.template",
+    "appId": "mg.rivolink.aiagent",
     "files": [
         "dist/**/*",
         "electron.js"
