@@ -1,7 +1,7 @@
 {
-    "name": "electron-template",
+    "name": "aiagent",
     "private": true,
-    "version": "1.0.0",
+    "version": "0.0.0",
     "main": "electron.js",
     "type": "module",
     "scripts": {
@@ -20,7 +20,7 @@
     },
     "build": {
         "publish": false,
-        "appId": "mg.rivolink.electron.template",
+        "appId": "mg.rivolink.aiagent",
         "files": [
             "dist/**/*",
             "electron.js"

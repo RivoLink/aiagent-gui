@@ -23,7 +23,7 @@ function createWindow() {
         <html lang="en">
             <head>
                 <meta charset="UTF-8">
-                <title>Electron Template</title>
+                <title>AiAgent</title>
             </head>
             <body>
             </body>
@@ -59,8 +59,8 @@ function createWindow() {
     });
 }
 
+app.setName('AiAgent');
 app.disableHardwareAcceleration();
-
 app.whenReady().then(createWindow);
 
 app.on('window-all-closed', () => {
