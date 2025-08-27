@@ -230,16 +230,9 @@ function Home() {
                 <div className="header-left">
                     <div className="header-avatar">AiA</div>
                     <div className="header-info">
-                        <h2>Ai Agent</h2>
+                        <h2>AiAgent</h2>
                         <div className="status">An AI assistant for instant, intelligent support.</div>
                     </div>
-                </div>
-                <div className="header-actions">
-                    <svg viewBox="0 0 24 24" fill="none" width="24px" height="24px">
-                        <path d="M13 5C13 4.44772 12.5523 4 12 4C11.4477 4 11 4.44772 11 5C11 5.55228 11.4477 6 12 6C12.5523 6 13 5.55228 13 5Z" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
-                        <path d="M13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12C11 12.5523 11.4477 13 12 13C12.5523 13 13 12.5523 13 12Z" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
-                        <path d="M13 19C13 18.4477 12.5523 18 12 18C11.4477 18 11 18.4477 11 19C11 19.5523 11.4477 20 12 20C12.5523 20 13 19.5523 13 19Z" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
-                    </svg>
                 </div>
             </div>
 
