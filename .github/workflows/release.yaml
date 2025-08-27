@@ -63,15 +63,19 @@ jobs:
         run: |
           npm run build
 
+      - name: Rename Binary
+        run: |
+          mv dist/{aiagent,AiAgent}-${{env.VERSION}}.AppImage
+
       # Exceeds GitHub's file size limit of 100.00 MB
       # - name: Setup Binary
       #   run: |
       #     rm -rf bin && mkdir bin
-      #     cp "dist/aiagent-${{env.VERSION}}.AppImage" "bin/aiagent.AppImage"
+      #     cp "dist/AiAgent-${{env.VERSION}}.AppImage" "bin/AiAgent.AppImage"
 
       - name: Setup Artifact
         run: |
-          echo "ARTIFACT=dist/aiagent-${{env.VERSION}}.AppImage" >> "$GITHUB_ENV"
+          echo "ARTIFACT=dist/AiAgent-${{env.VERSION}}.AppImage" >> "$GITHUB_ENV"
 
       - name: Commit Changes
         run: |
