@@ -51,6 +51,14 @@ jobs:
           version=$(npm pkg get version | sed -e 's/"//g')
           echo "VERSION=$version" >> "$GITHUB_ENV"
 
+      - name: Setup Variables
+        shell: bash
+        run: |
+          {
+            echo "VITE_AIAGENT_URL=${{secrets.VITE_AIAGENT_URL}}"
+            echo "VITE_AIAGENT_TOKEN=${{secrets.VITE_AIAGENT_TOKEN}}"
+          } > .env.local
+
       - name: Build Project
         run: |
           npm run build
