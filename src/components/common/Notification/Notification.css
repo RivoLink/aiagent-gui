@@ -25,6 +25,22 @@
     pointer-events: auto;
 }
 
+.notification.warn {
+    color: #ff9800;
+}
+
+.notification.warn .progress-fill {
+    background: #ff9800;
+}
+
+.notification.error {
+    color: #f44336;
+}
+
+.notification.error .progress-fill {
+    background: #f44336;
+}
+
 .notification-message {
     font-size: 14px;
     line-height: 1.4;

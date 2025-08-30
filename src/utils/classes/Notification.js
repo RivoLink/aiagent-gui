@@ -2,13 +2,25 @@ export default class Notification {
 
     static #TIMEOUT_ID = null;
 
-    static show(text, duration = 2000) {
+    static info(text, duration = 2000) {
+        Notification.show(text, 'info', duration);
+    }
+
+    static warn(text, duration = 2500) {
+        Notification.show(text, 'warn', duration);
+    }
+
+    static error(text, duration = 2500) {
+        Notification.show(text, 'error', duration);
+    }
+
+    static show(text, type = 'info', duration = 2000) {
         const notif = document.getElementById('notification');
         const msg = notif.querySelector('.notification-message');
         const fill = notif.querySelector('.progress-fill');
   
         msg.textContent = text;
-        notif.classList.add('show');
+        notif.classList.add('show', type);
   
         // reset progress bar
         fill.style.transition = 'none';
