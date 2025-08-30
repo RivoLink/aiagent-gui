@@ -57,7 +57,7 @@ jobs:
           {
             echo "VITE_AIAGENT_URL=${{secrets.VITE_AIAGENT_URL}}"
             echo "VITE_AIAGENT_TOKEN=${{secrets.VITE_AIAGENT_TOKEN}}"
-          } > .env.local
+          } > .env
 
       - name: Build Project
         run: |
