@@ -28,7 +28,7 @@ export default class AiAgent {
             }
         }
 
-        fleet.ajaxPost(url, token, data, onResponse, onResponse);
+        fleet.jsonPost(url, token, data, onResponse, onResponse);
     }
 
     static #getToken() {
